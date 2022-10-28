@@ -23,14 +23,16 @@ if st.session_state.text_input != "":
 uploaded_file = st.file_uploader("Choose a file")
 
 if uploaded_file is not None and st.session_state.text_input != "":
+ 
     try: 
         # prepare test file
-        test = get_ready_test(uploaded_file)
-        st.success('Dataframe uploaded successfully!')
+        
+        test = get_ready_test(RESULTS_PATH, uploaded_file)
         
        # get participant accuracy and prepare data for leaderboard
         participant_results = get_accuracy(RESULTS_PATH, test)
 
+        st.success('Dataframe uploaded successfully!')
         # print participant results
         st.title('Participant results')
         st.dataframe(participant_results)
@@ -42,8 +44,9 @@ if uploaded_file is not None and st.session_state.text_input != "":
         except: 
             participant_results.to_pickle('files_to_update/submissions.pkl')
         
+        
     except: 
-        st.error('The file has a wrong format, please, review it and load it again.')
+        st.error('Review the file and upload it again.')
 
 try: 
     show_leaderboard()

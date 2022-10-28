@@ -1,9 +1,24 @@
 import pandas as pd
 import streamlit as st
 
-def get_ready_test(uploaded_file):
-
+def get_ready_test(RESULTS_PATH: str, uploaded_file):
+    
+    results = pd.read_csv(RESULTS_PATH)
+    results.columns = ['id','real']
+    
     test = pd.read_csv(uploaded_file)
+    if (test.columns.to_list() != ['Id','Expensive']):
+        st.error('Column names must match "Id" and "Expensive" - case sensitive!')
+        return 0
+    if(test.shape != (1459, 2) ):
+        st.error('Your file should contain 1459 rows and 2 columns')
+        return 0
+    if((test.Expensive.unique().tolist() != [0,1] ) & (test.Expensive.unique().tolist() != [1,0] ) & (test.Expensive.unique().tolist() != [1] ) & (test.Expensive.unique().tolist() != [0] ) ):
+        st.error('Predictions should only have values of 0 and 1')
+        return 0
+    if( (test.Id == results.id).sum() != 1459):
+        st.error("Your Id column might be wrong or mixed up. You should have same Id's as the test file. Order of Id's should also be the same.")
+        return 0
     test.columns = ['id','preds']
     return (
     test
