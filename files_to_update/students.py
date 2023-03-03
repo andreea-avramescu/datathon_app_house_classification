@@ -1,6 +1,6 @@
 students = [
     'Andreea',
-    'Henry',
+    'Henrik',
     'Alisa',
     'Arne',
     'Benedikt',
