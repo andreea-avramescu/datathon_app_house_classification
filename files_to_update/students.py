@@ -7,7 +7,7 @@ students = [
     'Daniel',
     'Federico', 
     'Firdaus',
-    'Gozde',
+    'Gözde',
     'Kalpana',
     'Kristina',
     'Maath',
